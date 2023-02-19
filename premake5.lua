@@ -22,14 +22,20 @@ workspace "Bomberman"
       targetdir "bin/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
       objdir    "build/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}"
 
+      MATH_PATH = "src/math/"
       GAME_PATH = "src/game/"
-      files { GAME_PATH .. "**.h", GAME_PATH .. "**.cpp" }
+      files {
+         MATH_PATH .. "**.h", MATH_PATH .. "**.cpp",
+         GAME_PATH .. "**.h", GAME_PATH .. "**.cpp",
+      }
 
       links {
          "SDL2"
       }
 
       includedirs {
+         MATH_PATH,
+         GAME_PATH,
          "3rd",
          "3rd/SDL2/include",
       }
