@@ -1,4 +1,4 @@
-#include <string>  
+#include <string>
 
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
@@ -26,6 +26,23 @@ namespace game
         {
             SDL_Log("Unable to create renderer: %s", SDL_GetError());
             SDL_DestroyWindow(window);
+        }
+    }
+
+    SDLDevice::~SDLDevice()
+    {
+        if (renderer)
+        {
+            SDL_DestroyRenderer(renderer);
+        }
+
+        if (window)
+        {
+            SDL_DestroyWindow(window);
+        }
+
+        if (SDL_WasInit(0) != 0)
+        {
             SDL_Quit();
         }
     }
@@ -61,10 +78,6 @@ namespace game
                 SDL_RenderPresent(renderer);
             }
         }
-
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        SDL_Quit();
     }
 
 } // namespace game
@@ -73,7 +86,7 @@ using namespace game;
 
 int main(int argc, char **argv)
 {
-    SDLDevice device = SDLDevice(1280, 720);
+    SDLDevice device(1280, 720);
 
     device.Run();
 
